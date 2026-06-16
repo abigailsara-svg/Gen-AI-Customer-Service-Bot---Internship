@@ -1,0 +1,11 @@
+streamlit
+langchain
+langchain-community
+chromadb
+sentence-transformers
+transformers
+torch
+deep-translator
+langdetect
+ollama
+pypdf
