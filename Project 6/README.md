@@ -2,115 +2,184 @@
 
 ## Overview
 
-This project is a Multilingual AI Chatbot capable of understanding and responding in multiple languages while maintaining conversation context and continuity across language switches.
+This project implements a multilingual chatbot capable of understanding and responding in multiple languages while maintaining conversational context across language switches.
 
-The system uses Retrieval-Augmented Generation (RAG) with local LLM support and vector-based document retrieval to answer questions from uploaded PDF documents in a conversational manner.
-
-It automatically detects the user’s language, translates queries if needed, retrieves relevant context from stored documents, and generates responses in the same language.
+The system uses LangChain, ChromaDB, Ollama, LangDetect, Deep Translator, and Streamlit to create a Retrieval-Augmented Generation (RAG) chatbot that supports multilingual conversations and document-based question answering.
 
 ## Internship Task
 
 ### Problem Statement
 
-Develop a multilingual chatbot that can understand user queries in different languages and provide accurate, context-aware responses using retrieved document knowledge.
+Extend the existing chatbot to support multilingual conversations across multiple languages while preserving context, intent, and conversational continuity throughout language switches.
+
+The assistant should automatically identify languages, manage multilingual inputs, retrieve relevant information from documents, and provide responses in the user's language.
 
 ### Expected Outcome
 
-A chatbot that supports multilingual input, retrieves relevant PDF-based information, and responds naturally in the same language as the user.
+A multilingual chatbot capable of:
+
+- Detecting user language automatically.
+- Supporting cross-language conversations.
+- Maintaining conversation context.
+- Retrieving information from PDF documents.
+- Generating accurate responses in multiple languages.
+
+---
 
 ## Technologies Used
 
 - Python
-- Streamlit
 - LangChain
-- Ollama
 - ChromaDB
-- Deep Translator
+- Ollama
+- Streamlit
 - LangDetect
+- Deep Translator
+
+---
 
 ## Project Structure
 
-```plaintext
+```text
 Project-6/
 │
-├── app.py
+├── sample.pdf
+│
+├── vector_store.py
 ├── chatbot.py
 ├── translator.py
-├── vector_store.py
 ├── chat_test.py
+├── app.py
 ├── requirements.txt
-├── README.md
-│
-└── data/
-    └── sample.pdf
-Requirements
-streamlit
-langchain
-chromadb
-ollama
-deep-translator
-langdetect
-Methodology
-1. User Input Collection
+└── README.md
+```
 
-The user enters a question in any supported language (English, Malayalam, Hindi, Tamil).
-The Streamlit interface sends the query to the chatbot system.
+---
 
-2. Language Detection
+## Methodology
 
-The system detects the language of the input using LangDetect.
-If needed, the query is translated into the model’s working language.
+### 1. Knowledge Base Creation
 
-3. Retrieval-Augmented Generation (RAG)
+- PDF documents are loaded using PyPDFLoader.
+- Documents are split into smaller chunks.
+- Embeddings are generated using Ollama Embeddings.
+- Chunks are stored in ChromaDB vector database.
 
-The query is converted into embeddings using Ollama embedding models.
-ChromaDB retrieves the most relevant chunks from stored PDF documents.
-Relevant context is passed to the LLM for response generation.
+### 2. Language Detection
 
-4. Response Generation
+- User input is analyzed using LangDetect.
+- The system automatically identifies the language of the query.
+- Supported languages include English, Malayalam, Hindi, and Tamil.
 
-Ollama LLM generates a contextual response using retrieved data.
-The response is translated back into the user’s original language if required.
+### 3. Translation Pipeline
 
-5. Conversational Memory
+- Queries are translated to English for processing.
+- Retrieved responses are translated back into the user's language.
+- Deep Translator is used for multilingual translation.
 
-The chatbot maintains conversation history for better context retention.
-Ensures continuity across multilingual interactions.
+### 4. Context Retention
 
-Results
+- Previous conversations are stored in memory.
+- Context is preserved across language switches.
+- Users can continue conversations in different languages without losing continuity.
+
+### 5. Question Answering
+
+- User submits a query through the Streamlit interface.
+- Relevant document chunks are retrieved from ChromaDB.
+- Ollama generates responses using the retrieved context.
+- Responses are returned in the user's language.
+
+---
+
+## Results
 
 The chatbot successfully:
 
-Detects multiple languages automatically
-Retrieves relevant information from PDFs
-Maintains conversation context
-Provides accurate multilingual responses
-Works through a simple Streamlit interface
-How to Run
-Install Dependencies
+- Detects multiple languages automatically.
+- Retrieves relevant information from PDF documents.
+- Maintains conversational context.
+- Supports multilingual conversations.
+- Handles language switching during conversations.
+- Generates responses in the user's language.
+- Works through a Streamlit web interface.
+
+---
+
+## How to Run
+
+### Install Dependencies
+
+```bash
 pip install -r requirements.txt
-Run the Application
+```
+
+### Create Vector Database
+
+```bash
+python vector_store.py
+```
+
+### Run the Application
+
+```bash
 streamlit run app.py
-Sample Workflow
-Start the Streamlit application
-Upload or load a PDF document
-Enter a query in any supported language
-The system detects language and processes the query
-Relevant information is retrieved from the vector database
-The chatbot responds in the same language
-Example Queries
-Language	User Message
-English	What is AI?
-Malayalam	AI എന്താണ്?
-Hindi	AI क्या है?
-Mixed	Explain machine learning in Malayalam
-Future Improvements
-Voice-based multilingual interaction
-More Indian language support
-Improved translation accuracy
-Faster vector retrieval optimization
-Enhanced UI/UX design
-Author
+```
+
+---
+
+## Sample Workflow
+
+1. Create the vector database using PDF documents.
+2. Start the Streamlit application.
+3. Enter a query in English, Malayalam, Hindi, or Tamil.
+4. The system detects the language automatically.
+5. Relevant information is retrieved from the vector database.
+6. The chatbot generates a response in the same language.
+7. Continue the conversation in another language while maintaining context.
+
+---
+
+## Example Queries
+
+### English
+
+```
+What is AI?
+```
+
+### Malayalam
+
+```
+AI എന്താണ്?
+```
+
+### Hindi
+
+```
+AI क्या है?
+```
+
+### Mixed Language
+
+```
+Explain machine learning in Malayalam
+```
+
+---
+
+## Future Improvements
+
+- Voice-based multilingual interaction.
+- Support for additional languages.
+- Improved translation accuracy.
+- Enhanced conversational memory.
+- Real-time document updates.
+- Better user interface design.
+
+---
+
+## Author
 
 Abigail Sara David
 
